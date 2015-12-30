@@ -12,7 +12,7 @@
 
 VPS默认的操作系统是Centos6，又需要的可以自己另换
 
-### VPS的需要注意：
+### VPS需要注意：
 > * 如果要通过SSH管理VPS的话，需要去KiwiVM面板的`Root password modification`菜单下生成个新的root密码，使用SSH工具连接的时候就可以以root为登录名，生成的密码为密码连接了。
 > * VPS直接集成了`Shadowsocks`。选择`Shadowsocks Server`菜单进行相关操作即可。
 
