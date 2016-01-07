@@ -1,6 +1,6 @@
-﻿title:android-pluginmgr分析
-date:2016-01-07
-tags:android, 插件开发
+﻿title: android-pluginmgr分析
+date: 2016-01-07
+tags: Android, 插件开发
 ---
 android—pluginmgr这个插件框架和之前开发者在博客上介绍的已经不同了，今天主要就是记录下新的框架的开发流程。
 这个框架的开发者之前介绍的的博客是：[http://blog.csdn.net/hkxxx/article/details/42194387](http://blog.csdn.net/hkxxx/article/details/42194387)。
