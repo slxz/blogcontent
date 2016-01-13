@@ -44,7 +44,8 @@ LayoutInflater.from(context).inflate(int layoutid, ViewGroup rootview, boolean a
 先递上一篇[Google的怨妇文](http://blog.csdn.net/lxgwm2008/article/details/36376109)，虽然都是英文，但是还能看懂的。
 我们项目中这里的inflate的第二个参数传null了，所以即使我之前设置好了高度后还是有问题。因此在代码里面还得重新设置params的值。
 以后inflate时一定注意要加上root，就像Google文章中说的，大部分时候都要root的，root为null的情况很少。保证布局中设置的Params在inflate或者addview时候也能用！
-或者可以这样对应上：有root，则addView时可以只用传resId；没有root时，则addView时需要传入resId以及LayoutParams
+~~~或者可以这样对应上：有root，则addView时可以只用传resId；没有root时，则addView时需要传入resId以及LayoutParams~~~
+修改下，inflate当rootview不是null时，不能与addView一起共用！
 
 
 
