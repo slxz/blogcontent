@@ -1,52 +1,52 @@
-title: Inflateµ¼Èë²¼¾ÖÎÄ¼ş
+ï»¿title: Inflateå¯¼å…¥å¸ƒå±€æ–‡ä»¶
 date: 2016-01-12
-tags: Android, View, ²¼¾Ö
+tags: Android, View, å¸ƒå±€
 ---
-## Ö÷ÒªÎÊÌâ
-¿ª·¢¹ı³ÌÖĞÒªµ¯³öÒ»¸ö¶Ô»°¿ò£¬ÎÒÊ¹ÓÃÁËÏîÄ¿ÖĞÒÑ¾­Ìá¹©µÄ×Ô¶¨Òå¶Ô»°¿ò£¬´«ÈëÁËÒ»¸öÏâÇ¶ÁËListViewµÄ²¼¾Ö£¬½á¹û²»¹ÜÎÒÔõÃ´ÉèÖÃ²¼¾Ö£¬ListViewÓÀÔ¶¶¼ÊÇÖ»ÏÔÊ¾µ¥¶ÀÒ»¸öItemµÄÒ»¸ö¿Ø¼ş¡£
+## ä¸»è¦é—®é¢˜
+å¼€å‘è¿‡ç¨‹ä¸­è¦å¼¹å‡ºä¸€ä¸ªå¯¹è¯æ¡†ï¼Œæˆ‘ä½¿ç”¨äº†é¡¹ç›®ä¸­å·²ç»æä¾›çš„è‡ªå®šä¹‰å¯¹è¯æ¡†ï¼Œä¼ å…¥äº†ä¸€ä¸ªé•¶åµŒäº†ListViewçš„å¸ƒå±€ï¼Œç»“æœä¸ç®¡æˆ‘æ€ä¹ˆè®¾ç½®å¸ƒå±€ï¼ŒListViewæ°¸è¿œéƒ½æ˜¯åªæ˜¾ç¤ºå•ç‹¬ä¸€ä¸ªItemçš„ä¸€ä¸ªæ§ä»¶ã€‚
 
-## ÎÊÌâ·ÖÎö
-Í¨¹ı×·×Ù´úÂë·¢ÏÖ£¬Õâ¸ö×Ô¶¨Òåµ¯³ö¿òµÄ¸¸²¼¾ÖÖĞ´æÔÚÒ»¸öScrollView¡£Òò´Ë£¬Ò»¿ªÊ¼ÎÒÒÔÎªÊÇScrollViewÀ´Ç¶Ì×ListViewµÄÎÊÌâ£¬ÓÚÊÇ¼ÓÈëÁËListView¸ù¾İItem¸öÊıÀ´¶¯Ì¬Éú³É¸ß¶ÈµÄ´úÂë£¬½á¹û»¹ÊÇ²»Æğ×÷ÓÃ¡£
-¶¯Ì¬¼ÆËãListView¸ß¶ÈµÄ²¿·Ö´úÂë£¬Êµ¼ÊÊ¹ÓÃÇë×Ô¼º²¹Æë´úÂë
+## é—®é¢˜åˆ†æ
+é€šè¿‡è¿½è¸ªä»£ç å‘ç°ï¼Œè¿™ä¸ªè‡ªå®šä¹‰å¼¹å‡ºæ¡†çš„çˆ¶å¸ƒå±€ä¸­å­˜åœ¨ä¸€ä¸ªScrollViewã€‚å› æ­¤ï¼Œä¸€å¼€å§‹æˆ‘ä»¥ä¸ºæ˜¯ScrollViewæ¥åµŒå¥—ListViewçš„é—®é¢˜ï¼Œäºæ˜¯åŠ å…¥äº†ListViewæ ¹æ®Itemä¸ªæ•°æ¥åŠ¨æ€ç”Ÿæˆé«˜åº¦çš„ä»£ç ï¼Œç»“æœè¿˜æ˜¯ä¸èµ·ä½œç”¨ã€‚
+åŠ¨æ€è®¡ç®—ListViewé«˜åº¦çš„éƒ¨åˆ†ä»£ç ï¼Œå®é™…ä½¿ç”¨è¯·è‡ªå·±è¡¥é½ä»£ç 
 ```java
-// 1¡¢»ñÈ¡adapter
+// 1ã€è·å–adapter
 adapter = listView.getAdapter();
-// 2¡¢Í¨¹ıµ÷ÓÃadapterµÄÃ¿¸ö×ÓItemview£¬¼ÆËãÕâ¸ö×ÓItemµÄ¸ß¶È£¬²¢ÀÛ¼ÓËã³öËùÓĞ¸ß¶È
+// 2ã€é€šè¿‡è°ƒç”¨adapterçš„æ¯ä¸ªå­Itemviewï¼Œè®¡ç®—è¿™ä¸ªå­Itemçš„é«˜åº¦ï¼Œå¹¶ç´¯åŠ ç®—å‡ºæ‰€æœ‰é«˜åº¦
 for(int i:apater.getCount()){
 	itemView = adapter.getView(i, null, listView);
 	itemView.measure(0, 0);
 	totalHeight += itemView.getMeasuredHeight();
 }
-// 3¡¢ÉèÖÃlistViewµÄlayoutParams
+// 3ã€è®¾ç½®listViewçš„layoutParams
 ViewGroup.LayoutParams params = listView.getLayoutParams();
 params.height = totalHeight + (listView.getDividerHeight() * listViewCount)
 lv.setLayoutParams(params);
 ```
-ÒâÍâµÄÊÇ£¬Ö®ºó»¹ÊÇÎŞ·¨ÔËĞĞ£¬ÔÙ¸ú´úÂë£¬·¢ÏÖÕâÀïÓÃÁË`addView(int, LayoutParams)`À´½«´«ÈëµÄview¼ÓÈëµ½²¼¾ÖÖĞ£¬LayoutParams³õÊ¼»¯¶¼ÊÇ`MATCH_PARENT`¡£
-ÕâÑùµÄ»°£¬ËäÈ»ListViewÊÇ¶¯Ì¬ÉèÖÃ¸ß¶È£¬µ«ÊÇ´«¹ıÀ´µÄview»¹ÊÇ¸ù¾İ¸¸¿Ø¼şÀ´¼ÆËãµÄ¡£Òò´ËÕâÀïÖ»ÒªÈÃaddViewµÄLayoutParams²ÎÊıÒ²ÊÇ¶¯Ì¬µÄÉèÖÃµÄ¼´¿É½â¾öÁË¡£
+æ„å¤–çš„æ˜¯ï¼Œä¹‹åè¿˜æ˜¯æ— æ³•è¿è¡Œï¼Œå†è·Ÿä»£ç ï¼Œå‘ç°è¿™é‡Œç”¨äº†`addView(int, LayoutParams)`æ¥å°†ä¼ å…¥çš„viewåŠ å…¥åˆ°å¸ƒå±€ä¸­ï¼ŒLayoutParamsåˆå§‹åŒ–éƒ½æ˜¯`MATCH_PARENT`ã€‚
+è¿™æ ·çš„è¯ï¼Œè™½ç„¶ListViewæ˜¯åŠ¨æ€è®¾ç½®é«˜åº¦ï¼Œä½†æ˜¯ä¼ è¿‡æ¥çš„viewè¿˜æ˜¯æ ¹æ®çˆ¶æ§ä»¶æ¥è®¡ç®—çš„ã€‚å› æ­¤è¿™é‡Œåªè¦è®©addViewçš„LayoutParamså‚æ•°ä¹Ÿæ˜¯åŠ¨æ€çš„è®¾ç½®çš„å³å¯è§£å†³äº†ã€‚
 
-## Ïà¹ØÑ§Ï°
-Inflateµ¼Èë²¼¾ÖÎÄ¼ş
+## ç›¸å…³å­¦ä¹ 
+Inflateå¯¼å…¥å¸ƒå±€æ–‡ä»¶
 ```java
 View mainView = LayoutInflater.from(context).inflate(int layoutid, ViewGroup root); // #1
 LayoutInflater.from(context).inflate(int layoutid, ViewGroup rootview, boolean attachroot); // #2
 ```
-1´¦Êµ¼Êµ÷ÓÃµÄ¾ÍÊÇ2´¦µÄ·½·¨£º`inflate(resource, root, root != null)`
-µÚÒ»¸ö²ÎÊıÊÇÄãÒªÉú³ÉµÄViewµÄ×ÊÔ´id£¬µÚ¶ş¸ö²ÎÊıÊÇÄãÒª½«¸öview¸½¼Óµ½µÄViewGroup£¬µÚÈı¸ö²ÎÊıÊÇ¸öbooleanÖµ£¬±ê¼ÇÊÇ·ñ¸½µ½rootÉÏ¡£
-Í¨¹ıÔ´Âë¿ÉÒÔ·¢ÏÖ¿ÉÒÔ×ö³öÒÔÏÂµÄÅĞ¶Ï
-| ²ÎÊı | ËµÃ÷ |
+1å¤„å®é™…è°ƒç”¨çš„å°±æ˜¯2å¤„çš„æ–¹æ³•ï¼š`inflate(resource, root, root != null)`
+ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯ä½ è¦ç”Ÿæˆçš„Viewçš„èµ„æºidï¼Œç¬¬äºŒä¸ªå‚æ•°æ˜¯ä½ è¦å°†ä¸ªviewé™„åŠ åˆ°çš„ViewGroupï¼Œç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯ä¸ªbooleanå€¼ï¼Œæ ‡è®°æ˜¯å¦é™„åˆ°rootä¸Šã€‚
+é€šè¿‡æºç å¯ä»¥å‘ç°å¯ä»¥åšå‡ºä»¥ä¸‹çš„åˆ¤æ–­
+| å‚æ•° | è¯´æ˜ |
 | ---- | ----: |
-| rootview=null, attachroot=false | ·µ»ØµÄÊÇ¼´ÊÇÄãÒªµÄview£¬layoutParams¼´ÊÇÄãÒªµÄparams |
-| rootView!=null, attachroot=false | ·µ»ØµÄÊÇ¼´ÊÇÄãÒªµÄview£¬layoutParamsÊÇrootµÄparams |
-| rootView!=null, attachroot=true | ·µ»ØµÄÊÇÌí¼ÓÁËviewµÄroot |
+| rootview=null, attachroot=false | è¿”å›çš„æ˜¯å³æ˜¯ä½ è¦çš„viewï¼ŒlayoutParamså³æ˜¯ä½ è¦çš„params |
+| rootView!=null, attachroot=false | è¿”å›çš„æ˜¯å³æ˜¯ä½ è¦çš„viewï¼ŒlayoutParamsæ˜¯rootçš„params |
+| rootView!=null, attachroot=true | è¿”å›çš„æ˜¯æ·»åŠ äº†viewçš„root |
 
-## ×Ü½á
-ÏÈµİÉÏÒ»Æª[GoogleµÄÔ¹¸¾ÎÄ](http://blog.csdn.net/lxgwm2008/article/details/36376109)£¬ËäÈ»¶¼ÊÇÓ¢ÎÄ£¬µ«ÊÇ»¹ÄÜ¿´¶®µÄ¡£
-ÎÒÃÇÏîÄ¿ÖĞÕâÀïµÄinflateµÄµÚ¶ş¸ö²ÎÊı´«nullÁË£¬ËùÒÔ¼´Ê¹ÎÒÖ®Ç°ÉèÖÃºÃÁË¸ß¶Èºó»¹ÊÇÓĞÎÊÌâ¡£Òò´ËÔÚ´úÂëÀïÃæ»¹µÃÖØĞÂÉèÖÃparamsµÄÖµ¡£
-ÒÔºóinflateÊ±Ò»¶¨×¢ÒâÒª¼ÓÉÏroot£¬¾ÍÏñGoogleÎÄÕÂÖĞËµµÄ£¬´ó²¿·ÖÊ±ºò¶¼ÒªrootµÄ£¬rootÎªnullµÄÇé¿öºÜÉÙ¡£±£Ö¤²¼¾ÖÖĞÉèÖÃµÄParamsÔÚinflate»òÕßaddviewÊ±ºòÒ²ÄÜÓÃ£¡
-~~»òÕß¿ÉÒÔÕâÑù¶ÔÓ¦ÉÏ£ºÓĞroot£¬ÔòaddViewÊ±¿ÉÒÔÖ»ÓÃ´«resId£»Ã»ÓĞrootÊ±£¬ÔòaddViewÊ±ĞèÒª´«ÈëresIdÒÔ¼°LayoutParams~~
-ĞŞÕıÏÂ£¬inflateµ±rootview²»ÊÇnullÊ±£¬²»ÄÜÓëaddViewÒ»Æğ¹²ÓÃ£¡
-ÒòÎªaddViewÖĞµ÷ÓÃµÄaddViewInnerÖĞ»áÅĞ¶ÏÌí¼ÓµÄViewµÄparentÊÇ·ñÒÑ¾­Îª¿Õ£¬·ñÔò»á±¨IllegalStateException¡£
+## æ€»ç»“
+å…ˆé€’ä¸Šä¸€ç¯‡[Googleçš„æ€¨å¦‡æ–‡](http://blog.csdn.net/lxgwm2008/article/details/36376109)ï¼Œè™½ç„¶éƒ½æ˜¯è‹±æ–‡ï¼Œä½†æ˜¯è¿˜èƒ½çœ‹æ‡‚çš„ã€‚
+æˆ‘ä»¬é¡¹ç›®ä¸­è¿™é‡Œçš„inflateçš„ç¬¬äºŒä¸ªå‚æ•°ä¼ nulläº†ï¼Œæ‰€ä»¥å³ä½¿æˆ‘ä¹‹å‰è®¾ç½®å¥½äº†é«˜åº¦åè¿˜æ˜¯æœ‰é—®é¢˜ã€‚å› æ­¤åœ¨ä»£ç é‡Œé¢è¿˜å¾—é‡æ–°è®¾ç½®paramsçš„å€¼ã€‚
+ä»¥åinflateæ—¶ä¸€å®šæ³¨æ„è¦åŠ ä¸Šrootï¼Œå°±åƒGoogleæ–‡ç« ä¸­è¯´çš„ï¼Œå¤§éƒ¨åˆ†æ—¶å€™éƒ½è¦rootçš„ï¼Œrootä¸ºnullçš„æƒ…å†µå¾ˆå°‘ã€‚ä¿è¯å¸ƒå±€ä¸­è®¾ç½®çš„Paramsåœ¨inflateæˆ–è€…addviewæ—¶å€™ä¹Ÿèƒ½ç”¨ï¼
+~~æˆ–è€…å¯ä»¥è¿™æ ·å¯¹åº”ä¸Šï¼šæœ‰rootï¼Œåˆ™addViewæ—¶å¯ä»¥åªç”¨ä¼ resIdï¼›æ²¡æœ‰rootæ—¶ï¼Œåˆ™addViewæ—¶éœ€è¦ä¼ å…¥resIdä»¥åŠLayoutParams~~
+ä¿®æ­£ä¸‹ï¼Œinflateå½“rootviewä¸æ˜¯nullæ—¶ï¼Œä¸èƒ½ä¸addViewä¸€èµ·å…±ç”¨ï¼
+å› ä¸ºaddViewä¸­è°ƒç”¨çš„addViewInnerä¸­ä¼šåˆ¤æ–­æ·»åŠ çš„Viewçš„parentæ˜¯å¦å·²ç»ä¸ºç©ºï¼Œå¦åˆ™ä¼šæŠ¥IllegalStateExceptionã€‚
 
 
 
