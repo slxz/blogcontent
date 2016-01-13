@@ -35,7 +35,7 @@ LayoutInflater.from(context).inflate(int layoutid, ViewGroup rootview, boolean a
 第一个参数是你要生成的View的资源id，第二个参数是你要将个view附加到的ViewGroup，第三个参数是个boolean值，标记是否附到root上。
 通过源码可以发现可以做出以下的判断
 | 参数 | 说明 |
-| ---- | ---- |
+| ---- | ----: |
 | rootview=null, attachroot=false | 返回的是即是你要的view，layoutParams即是你要的params |
 | rootView!=null, attachroot=false | 返回的是即是你要的view，layoutParams是root的params |
 | rootView!=null, attachroot=true | 返回的是添加了view的root |
