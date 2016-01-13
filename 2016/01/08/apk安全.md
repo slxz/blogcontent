@@ -1,8 +1,8 @@
-title: Android·´±àÒë¶Ô¿¹
+ï»¿title: Androidåç¼–è¯‘å¯¹æŠ—
 date: 2016-01-08
-tags: Android, ·´±àÒë
+tags: Android, åç¼–è¯‘
 ---
-## ×ÊÁÏÊÕ¼¯
-[APKÎ±¼ÓÃÜ](http://bbs.pediy.com/showthread.php?t=187789)
-[·´±àÒë¶Ô¿¹1](http://blog.csdn.net/asmcvc/article/details/14126507)
-[·´±àÒë¶Ô¿¹2](http://my.oschina.net/u/2323218/blog/406860)
+## èµ„æ–™æ”¶é›†
+[APKä¼ªåŠ å¯†](http://bbs.pediy.com/showthread.php?t=187789)
+[åç¼–è¯‘å¯¹æŠ—1](http://blog.csdn.net/asmcvc/article/details/14126507)
+[åç¼–è¯‘å¯¹æŠ—2](http://my.oschina.net/u/2323218/blog/406860)
