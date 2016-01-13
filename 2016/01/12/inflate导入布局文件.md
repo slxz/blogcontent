@@ -34,9 +34,10 @@ LayoutInflater.from(context).inflate(int layoutid, ViewGroup rootview, boolean a
 1处实际调用的就是2处的方法：`inflate(resource, root, root != null)`
 第一个参数是你要生成的View的资源id，第二个参数是你要将个view附加到的ViewGroup，第三个参数是个boolean值，标记是否附到root上。
 通过源码可以发现可以做出以下的判断
-| rootview=null, attachroot=false | 返回的是即是你要的view，layoutParams即是你要的params
-| rootView!=null, attachroot=false | 返回的是即是你要的view，layoutParams是root的params
-| rootView!=null, attachroot=true | 返回的是添加了view的root
+| 参数 | 说明|
+| rootview=null, attachroot=false | 返回的是即是你要的view，layoutParams即是你要的params |
+| rootView!=null, attachroot=false | 返回的是即是你要的view，layoutParams是root的params |
+| rootView!=null, attachroot=true | 返回的是添加了view的root |
 
 ## 总结
 先递上一篇[Google的怨妇文](http://blog.csdn.net/lxgwm2008/article/details/36376109)，虽然都是英文，但是还能看懂的。
