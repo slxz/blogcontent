@@ -6,6 +6,7 @@ tags: Android, 反编译
 [APK伪加密](http://bbs.pediy.com/showthread.php?t=187789)
 [反编译对抗1](http://blog.csdn.net/asmcvc/article/details/14126507)
 [反编译对抗2](http://my.oschina.net/u/2323218/blog/406860)
+<<<<<<< HEAD
 
 ## 起因
 做出来的应用拿到安全公司检测，发现了一堆问题，美其名高危漏洞。
@@ -82,3 +83,5 @@ RSAPublicKey key = (RSAPublicKey)cert.getPublicKey();
 BigInteger biKey = key.getModulus();
 pubKey = biKey.toString();
 ```
+=======
+>>>>>>> 7b588c0fc290729092bad5127e6c029bcb9bbb6c
