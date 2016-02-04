@@ -49,4 +49,13 @@ as.start();
 进阶的话就要介绍下`TypeEvaluator`，这里有篇[文章](http://blog.csdn.net/jdsjlzx/article/details/45558901)，比较值得学习的！
 这里`TypeEvaluator`就是之前讲的渐变中负责渐变处理的，也正是提供了这个接口，属性动画才能真正做到不仅仅是针对单纯的动画。
 
+### 补充
+通过`setInterpolator`方法，属性动画还可以设置速率，动画变化速率。
+> * AccelerateDecelerateInterpolator，动画开始与结束的地方改变的比较慢，在中间时候加速
+> * AccelerateInterpolator，在动画开始的地方速率改变的慢，然后开始加速
+> * CycleInterpolator，动画循环播放特定的次数，速率改变沿着正弦曲线
+> * DecelerateInterpolator，在动画开始的地方速率改变的比较慢，然后开始减速
+> * LinearInterpolator，动画匀速改变
+示例：anim.setInterpolator(new LinearInterpolator());
+
 
