@@ -41,7 +41,7 @@ public static int getDefaultSize(int size, int measureSpec){
 
 ### 推荐阅读
 #### [Android中invalidate() 函数详解(结合Android 4.0.4 最新源码)](http://blog.csdn.net/zjmdp/article/details/7713209)
-#### [Android View刷新机制](http://blog.csdn.net/chenzhiqin20/article/details/8628952
+#### [Android View刷新机制](http://blog.csdn.net/chenzhiqin20/article/details/8628952)
 #### [Android学习 之 获取可视区域的Rect对象(顺带获取状态栏和标题栏高度的方法)](http://blog.csdn.net/fengkuanghun/article/details/7481222)
 ### 总结
 1、view的重绘的执行逻辑都是一层一层向父View传递的。最终由ViewRoot来执行相关区域的重绘的。这个区域以Rect的形式来保存的。重绘区域是子View与对应父View的交集部分。
