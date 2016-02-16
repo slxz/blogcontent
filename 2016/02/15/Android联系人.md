@@ -16,7 +16,7 @@ Android联系人的主要结构可以看[这里的介绍](http://www.android-doc
 ### CommonDataKinds
 [`CommonDataKinds`](http://www.android-doc.com/reference/android/provider/ContactsContract.CommonDataKinds.html)就是来解决上面的问题，
 这个类中也提供了各种内部类来区分具体信息，如`Nickname`,`Phone`,`Email`等类，这里就提供了具体信息，通过使用ContentProvider的逻辑来查找。
-
+注意`Nickname`与`Phone`获取方式的不同
 #### 示例
 ```java
 Uri contactUri = ContactsContract.Contacts.CONTENT_URI;
@@ -29,11 +29,17 @@ String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.D
 for(int i = 0;i<cursor.getColumnCount();i++)
     Log.d("ContactInfo", "列"+i+" （"+cursor.getColumnName(i)+"）值为"+cursor.getString(i));
 Cursor phoneCursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "= ? ", new String[]{id}, null);
+Cursor nickNameCursor = cr.query(ContactsContract.Data.CONTENT_URI, null, ContactsContract.CommonDataKinds.Nickname.CONTACT_ID + "=?", new String[]{id}, null);
 Log.i("ContactInfo", "联系人：" + name);
 while (phoneCursor.moveToNext()) {
     String phoneNum = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
     Log.i("ContactInfo", "    电话号码：" + phoneNum);
-    phoneCursor.close();
+    
+}
+while(nickNameCursor.moveToNext()){
+    String nickName = nickNameCursor.getString(nickNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.Nickname.NAME));
+}
+phoneCursor.close();
 }
 cursor.close();
 ```
