@@ -47,6 +47,8 @@ LayoutInflater.from(context).inflate(int layoutid, ViewGroup rootview, boolean a
 ~~或者可以这样对应上：有root，则addView时可以只用传resId；没有root时，则addView时需要传入resId以及LayoutParams~~
 修正下，inflate当rootview不是null时，不能与addView一起共用！
 因为addView中调用的addViewInner中会判断添加的View的parent是否已经为空，否则会报IllegalStateException。
+## 补充
+在使用ListView时，对每个Item的布局的最外层设置相关属性貌似是无效的，当在最外层设置了marginleft属性，结果无效，但是在以一个元素上设置了marginleft属性就是可以的，这应该也还是和传递过来的parent有关系
 
 
 
