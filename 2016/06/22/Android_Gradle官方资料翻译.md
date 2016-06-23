@@ -107,12 +107,140 @@ gradle tasks --all
 ##### Java项目的构建任务
 Java插件创建了两个最重要的任务，定位任务依赖关系如下：
 > * assemble
-	> * jar 这个任务用来创建输出
+	+ jar 这个任务用来创建输出
 > * check
-	> * test 这个任务运行测试
+	+ test 这个任务运行测试
 jar任务本身会直接或者间接的依赖于其他的任务，如classes任务就会编译java代码。项目的test的部分会被testClasses来编译，但是一般都是运行test来达到要求，test也是依赖于testClasses的。
 通常情况，你一般只会调用asse或者check任务，忽略其他的任务，你可以通过[这里](https://docs.gradle.org/current/userguide/java_plugin.html)查看整个java插件的所有任务。
 
 ##### Android项目的构建任务
+Android构建插件也遵循相同的插件任务约定，所以能和其他插件兼容，添加了以下定位任务：
+> * assemble 这个任务会生成项目的各个输出项
+> * check 这个任务会运行所有的验证任务
+> * connectedCheck 验证确保有真机设备或者模拟器连接，多个设备连接时并发运行
+> * deviceCheck 验证连接设备的系统Api版本，这个是通过CI(持续集成)服务器来运行的。
+> * build 这个任务运行assemble和check
+> * clean 这个任务清除这个项目的输出项
+
+新的定位任务主要是为了保证当没有设备连接时也能运行常规的检查，注意build并不是依赖于deivceCheck或者是connectedCheck
+
+一个Android项目最起码有至少两个输出项，一个Debug版本客户端，一个Release版本客户端。这两个都是分别通过两个对应的任务产生的：
+> * assemble
+	+ assembleDebug
+	+ assembleRelease
+这两个又分别依赖于其他的任务，这些任务通过多步来编译生成一个APK客户端，assemble 任务又依赖于这两个，所以会生成两个客户端。
+
+这些check任务都有他们自己的依赖，
+> * check
+	+ lint
+> * connectedCheck
+	+ connectedAndroidTest
+> * deviceCheck
+	这个任务依赖与其他插件扩展的test节点。
+
+最后，插件会创建任务去安装和卸载所有的编译生成的经过签名的客户端（Debug，Release，test）	
+> * installDebug
+> * installRelease
+> * uninstallAll
+	+ uninstallDebug
+	+ uninstallRelease
+	+ uninstallDebugAndroidTest
+
+#### 基本的编译配置
+Android插件允许通过DSL来直接配置相关的编译属性
+
+##### Manifest元素
+通过DSL，可以对Manifest中的很多重要元素进行配置，例如：
+> * minSdkVersion
+> * targetSdkVersion
+> * versionCode
+> * versionName
+> * applicationId 即包名
+> * testApplication 
+> * testInstrumentationRunner
+示例：
+```bash
+android{
+	compileSdkVersion 23
+	buildToolsVersion "23.0.1"
+	
+	defaultConfig{
+		versionCode 12
+		versionName "2.0"
+		minSdkVersion 16
+		targetSdkVersion 23
+	}
+}
+```
+请查看[Android插件DSL说明](http://google.github.io/android-gradle-dsl/current/)了解详细的可配置编译参数以及它们的默认值
+
+将编译参数放到编译脚本中的好处是这些参数可以动态控制。这里就有个通过读取文件配置或者其他定制逻辑来获得versionName的示例：
+```bash
+def computeVersionName(){
+	...
+}
+android{
+	compileSdkVersion 23
+	buildToolsVersion "23.0.1"
+	defaultConfig{
+		versionCode 12
+		versionName computeVersionName()
+		minSdkVersion 16
+		targetSdkVersion 23
+	}
+}
+```
+**注意**：不要使用会和已存在的默认包含的get方法相冲突的方法名，比如`defaultConfig{...}`中使用了getVesionName会自动调用插件中defaultConfig.getVersionName而不是自己在外部配置的方法。
+
+##### 编译类型
+默认情况下，Android插件会自动设置项目同时编译Debug版本和Release版本，他们主要的不同就是是否可以在非开发模式的安全的设备上进行调试以及安装包是否签名，Debug版本是会在编译完成后自动使用一个已知的签名信息来签名，Release则不会，而是需要后期自己签名。
+
+这些配置都会在BuildType这部分配置，默认的，一般都会有两个实例，debug和release。Android插件允许定制包括这两个实例的其他多个实例。这些都是在buildTypes中配置。
+```bash
+android{
+	buildTypes{
+		debug{
+			applicationIdSuffix '.debug'
+		}
+		jnidebug{
+			initWith(buildTypes.debug)
+			applicationIdSuffix ".jnidebug"
+			jniDebuggable true
+		}
+	}
+}
+```
+以上的配置完成了以下几点：
+> * 配置默认的debug版本编译类型，设置生成的Debug客户端的包名以debug结尾，这样debug版本和release版本都可以安装在同一个机器上
+> * 创建另一个jnidebug编译版本然后配置先按照debug版本的初始化，然后通过后面的配置再针对jnidebug进行特殊配置
+配置新的编译类型就是简单在buildTypes中的最后添加一个新的元素，在其中使用initWith()或者直接配置，查看[DSL说明](http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.BuildType.html)了解详细的可配置编译参数。
+
+为了修改编译参数，`Build Types`加相关的代码来配置。每一个编译类型都会有对应的sourceSet，一般对应的源码都是放在`src/<buildtypename>`，比如`src/debug/java`目录就会在编译debug版本客户端是被编译。同时这意味着编译类型不能是main或者是androidTest，这些都是插件内部强制使用的，并且，还需要保持唯一。
+就像其他的SourceSet，源码路径也都是可以重新设置的
+```bash
+android{
+	sourceSets.jnidebug.setRoot('')
+}
+```
+另外，对于每个编译类型来做，都会有新的`assemble<BuildTypeName>`创建，比如`assembleDebug`。之前提及的assembleDebug和assembleRelease也都是这样来的。当Debug和Release编译类型将要被创建时，他们对应的任务都已经被创建了。根据这个规则，上面的build.gradle语句段中，也会自动生成assembleJnidebug任务，然后这个assemble也会同样的依赖与assembleDebug和assembleRelease任务。
+**注意**：同样的你也可以使用aJ简写来运行assembleJnidebug任务。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
